@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: auth-api
+  r2dbc:
+    url: r2dbc:postgresql://postgres-db:5432/auth_api_db
+    username: auth_user
+    password: auth_password
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+  api-docs:
+    path: /v3/api-docs
