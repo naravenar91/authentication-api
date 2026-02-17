@@ -6,6 +6,17 @@ spring:
     username: auth_user
     password: auth_password
 
+app:
+  security:
+    private-key-location: classpath:certs/private.pem
+    public-key-location: classpath:certs/public.pem
+
+  # Initial Admin user
+  admin:
+    user-id: ${ADMIN_USER_ID:admin}
+    password: ${ADMIN_PASSWORD:Admin1234}
+    uuid: ${ADMIN_UUID:a1b2c3d4-0000-0000-0000-000000000001}
+
 springdoc:
   swagger-ui:
     path: /swagger-ui.html

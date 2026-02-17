@@ -1,4 +1,4 @@
-version: '3.8'
+#version: '3.8'
 services:
   postgres-db:
     image: postgres:15-alpine
@@ -29,3 +29,7 @@ services:
       - SPRING_R2DBC_URL=r2dbc:postgresql://postgres-db:5432/auth_api_db
       - SPRING_R2DBC_USERNAME=auth_user
       - SPRING_R2DBC_PASSWORD=auth_password
+      # initial user Admin
+      - ADMIN_USER_ID=admin
+      - ADMIN_PASSWORD=Admin1234
+      - ADMIN_UUID=a1b2c3d4-0000-0000-0000-000000000001

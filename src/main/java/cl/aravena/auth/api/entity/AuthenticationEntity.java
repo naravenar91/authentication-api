@@ -28,6 +28,9 @@ public class AuthenticationEntity implements Persistable<String> {
     @Column("password")
     private String password;
 
+    @Column("role")
+    private String role;
+
     @Column("is_active")
     private Boolean isActive;
 
