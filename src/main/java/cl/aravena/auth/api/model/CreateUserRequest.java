@@ -9,5 +9,7 @@ public record CreateUserRequest(
         @Schema(example = "juanito", description = "Password")
         String password,
         @Schema(example = "true", description = "Is Active")
-        Boolean isActive
+        Boolean isActive,
+        @Schema(example = "USER", description = "Role user", allowableValues = {"USER", "ADMIN", "OPER"})
+        String role
 ) {}

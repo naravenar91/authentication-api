@@ -33,3 +33,6 @@ build/
 .vscode/
 
 .env
+
+# Claves RSA - nunca subir al repositorio
+src/main/resources/certs/private.pem
