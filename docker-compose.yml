@@ -19,7 +19,7 @@ services:
 
   auth-api:
     build: .
-    container_name: spring-auth-api
+    container_name: auth-api
     ports:
       - "8080:8080"
     depends_on:

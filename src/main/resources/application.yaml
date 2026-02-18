@@ -2,9 +2,19 @@ spring:
   application:
     name: auth-api
   r2dbc:
-    url: r2dbc:postgresql://postgres-db:5432/auth_api_db
+    url: r2dbc:postgresql://postgres-auth-db:5432/auth_api_db
     username: auth_user
     password: auth_password
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
 
 app:
   security:
