@@ -11,6 +11,8 @@ import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.util.Set;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -33,6 +35,9 @@ public class AuthenticationEntity implements Persistable<String> {
 
     @Column("is_active")
     private Boolean isActive;
+
+    @Transient
+    private Set<String> roles;
 
     @Transient
     private boolean isNew = false;
