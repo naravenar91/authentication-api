@@ -4,6 +4,7 @@ import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 public class JwtService {
@@ -14,7 +15,7 @@ public class JwtService {
         this.jwtEncoder = jwtEncoder;
     }
 
-    public String generateToken(String userId, String uuid, String role) {
+    public String generateToken(String userId, String uuid, List<String> role) {
 
         Instant now = Instant.now();
 

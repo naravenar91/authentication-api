@@ -1,25 +1,72 @@
 spring:
   application:
     name: auth-api
-  r2dbc:
-    url: r2dbc:postgresql://postgres-db:5432/auth_api_db
-    username: auth_user
-    password: auth_password
 
+  r2dbc:
+    url: ${SPRING_R2DBC_URL:r2dbc:postgresql://localhost:5432/auth_api_db}
+    username: ${SPRING_R2DBC_USERNAME:auth_user}
+    password: ${SPRING_R2DBC_PASSWORD:auth_password}
+
+  output:
+    ansi:
+      enabled: always
+
+  # ══════════════════════════════════════════════════════════════
+  # CONSUL CONFIGURATION
+  # ══════════════════════════════════════════════════════════════
+  cloud:
+    consul:
+      host: ${SPRING_CLOUD_CONSUL_HOST:localhost}
+      port: ${SPRING_CLOUD_CONSUL_PORT:8500}
+      discovery:
+        enabled: ${SPRING_CLOUD_CONSUL_DISCOVERY_ENABLED:true}
+        service-name: ${spring.application.name}
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+        prefer-ip-address: true
+        hostname: auth-api
+        tags:
+          - "version=1.0"
+          - "type=authentication"
+
+# ══════════════════════════════════════════════════════════════
+# LOGGING CONFIGURATION (Al mismo nivel que 'spring')
+# ══════════════════════════════════════════════════════════════
+logging:
+  level:
+    # Muestra las sentencias SQL ejecutadas por el cliente R2DBC
+    org.springframework.r2dbc.core.DatabaseClient: DEBUG
+    # Muestra las queries exactas y los parámetros (específico de Postgres)
+    io.r2dbc.postgresql.QUERY: DEBUG
+    io.r2dbc.postgresql.PARAM: DEBUG
+
+server:
+  port: 8080
+
+# ══════════════════════════════════════════════════════════════
+# ACTUATOR - Health checks para Consul
+# ══════════════════════════════════════════════════════════════
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+  health:
+    consul:
+      enabled: true
+
+# ══════════════════════════════════════════════════════════════
+# JWT & ADMIN CONFIGURATION
+# ══════════════════════════════════════════════════════════════
 app:
   security:
     private-key-location: classpath:certs/private.pem
     public-key-location: classpath:certs/public.pem
-
-  # Initial Admin user
   admin:
     user-id: ${ADMIN_USER_ID:admin}
     password: ${ADMIN_PASSWORD:Admin1234}
     uuid: ${ADMIN_UUID:a1b2c3d4-0000-0000-0000-000000000001}
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    operations-sorter: method
-  api-docs:
-    path: /v3/api-docs
